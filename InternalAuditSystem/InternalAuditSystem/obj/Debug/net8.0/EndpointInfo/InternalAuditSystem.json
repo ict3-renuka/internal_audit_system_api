@@ -5,6 +5,47 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/AuditRequest": {
+      "post": {
+        "tags": [
+          "AuditRequest"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "AuditRequest"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Center": {
       "post": {
         "tags": [
@@ -86,10 +127,139 @@
           }
         }
       }
+    },
+    "/api/Department": {
+      "post": {
+        "tags": [
+          "Department"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Department"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Department"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Department"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AuditRequest": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "meeting_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "preliminary_start_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "audit_firm_person_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "audit_firm_person_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "audit_department": {
+            "type": "string",
+            "nullable": true
+          },
+          "info_request_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "info_submit_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "field_work_start_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "field_work_end_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "exit_meeting_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "management_discussion_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "report_issued_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "shared_to_board_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "audit_committee_table_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "creation_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_modified_date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "Center": {
         "type": "object",
         "properties": {
@@ -124,6 +294,28 @@
             "nullable": true
           },
           "company_name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Department": {
+        "type": "object",
+        "properties": {
+          "internal_department_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "company_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "audit_department_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "internal_department_name": {
             "type": "string",
             "nullable": true
           }

@@ -13,5 +13,9 @@ namespace InternalAuditSystem.Data
         public DbSet<Company> Companies { get; set; }
 
         public DbSet<Center> Centers { get; set; }
+
+        public DbSet<Department> Departments{ get; set; }
+
+        public DbSet<AuditRequest> AuditRequests { get; set; }
     }
 }

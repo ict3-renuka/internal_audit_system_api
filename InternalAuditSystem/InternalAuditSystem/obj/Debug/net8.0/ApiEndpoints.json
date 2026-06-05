@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "InternalAuditSystem.Controllers.AuditRequestController",
+    "Method": "CreateAuditRequest",
+    "RelativePath": "api/AuditRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "InternalAuditSystem.Models.AuditRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.AuditRequestController",
+    "Method": "GetAllAuditRequests",
+    "RelativePath": "api/AuditRequest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InternalAuditSystem.Controllers.CenterController",
     "Method": "CreateCenter",
     "RelativePath": "api/Center",
@@ -45,6 +71,32 @@
     "ContainingType": "InternalAuditSystem.Controllers.CompanyController",
     "Method": "GetAllCompanies",
     "RelativePath": "api/Company",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.DepartmentController",
+    "Method": "CreateDepartment",
+    "RelativePath": "api/Department",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "department",
+        "Type": "InternalAuditSystem.Models.Department",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.DepartmentController",
+    "Method": "GetAllDepartments",
+    "RelativePath": "api/Department",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

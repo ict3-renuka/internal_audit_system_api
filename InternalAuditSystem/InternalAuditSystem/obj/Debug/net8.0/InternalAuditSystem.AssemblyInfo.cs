@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InternalAuditSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3912992e0ec37133cb5d9c7c0b5b0359c4f7d8d5")]
 [assembly: System.Reflection.AssemblyProductAttribute("InternalAuditSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InternalAuditSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
