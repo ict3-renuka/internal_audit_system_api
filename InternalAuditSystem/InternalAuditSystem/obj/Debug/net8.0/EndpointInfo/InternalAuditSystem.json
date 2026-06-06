@@ -46,6 +46,48 @@
         }
       }
     },
+    "/api/AuditRequest/{id}": {
+      "put": {
+        "tags": [
+          "AuditRequest"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Center": {
       "post": {
         "tags": [
@@ -168,6 +210,171 @@
           }
         }
       }
+    },
+    "/api/DraftObservation": {
+      "post": {
+        "tags": [
+          "DraftObservation"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftObservation"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftObservation"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftObservation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "DraftObservation"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/InternalDepartment": {
+      "post": {
+        "tags": [
+          "InternalDepartment"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalDepartment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalDepartment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalDepartment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "InternalDepartment"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ObservationDetails": {
+      "post": {
+        "tags": [
+          "ObservationDetails"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObservationDetails"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObservationDetails"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObservationDetails"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ObservationDetails"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ObservationDetails/{id}": {
+      "put": {
+        "tags": [
+          "ObservationDetails"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObservationDetails"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObservationDetails"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObservationDetails"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -192,7 +399,7 @@
             "format": "date-time",
             "nullable": true
           },
-          "audit_firm_person_id": {
+          "audit_firm": {
             "type": "string",
             "nullable": true
           },
@@ -303,7 +510,7 @@
       "Department": {
         "type": "object",
         "properties": {
-          "internal_department_id": {
+          "department_id": {
             "type": "integer",
             "format": "int32"
           },
@@ -311,13 +518,122 @@
             "type": "integer",
             "format": "int32"
           },
-          "audit_department_name": {
+          "department_name": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DraftObservation": {
+        "type": "object",
+        "properties": {
+          "observation_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "area": {
+            "type": "string",
+            "nullable": true
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "details": {
+            "type": "string",
+            "nullable": true
+          },
+          "risk_and_root_cause": {
+            "type": "string",
+            "nullable": true
+          },
+          "recommendation": {
+            "type": "string",
+            "nullable": true
+          },
+          "creation_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InternalDepartment": {
+        "type": "object",
+        "properties": {
+          "internal_department_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "department_id": {
+            "type": "integer",
+            "format": "int32"
           },
           "internal_department_name": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObservationDetails": {
+        "type": "object",
+        "properties": {
+          "observation_details_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "observation_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "department_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "internal_department_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "responsible_user": {
+            "type": "string",
+            "nullable": true
+          },
+          "management_response": {
+            "type": "string",
+            "nullable": true
+          },
+          "corrective_action_plan": {
+            "type": "string",
+            "nullable": true
+          },
+          "action_time_line": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "remark": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarked_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "creation_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_modified_date": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

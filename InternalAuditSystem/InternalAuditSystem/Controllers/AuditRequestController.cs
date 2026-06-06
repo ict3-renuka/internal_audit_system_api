@@ -23,7 +23,7 @@ namespace InternalAuditSystem.Controllers
             await _context.Database.ExecuteSqlRawAsync(
                 "EXEC sp_InsertAuditRequest " +
                 "@meeting_date, @description, @preliminary_start_date, " +
-                "@audit_firm_person_id, @audit_firm_person_name, @audit_department, " +
+                "@audit_firm, @audit_firm_person_name, @audit_department, " +
                 "@info_request_date, @info_submit_date, @field_work_start_date, " +
                 "@field_work_end_date, @exit_meeting_date, @management_discussion_date, " +
                 "@report_issued_date, @shared_to_board_date, @audit_committee_table_date",
@@ -31,7 +31,7 @@ namespace InternalAuditSystem.Controllers
                 new SqlParameter("@meeting_date", request.meeting_date),
                 new SqlParameter("@description", request.description),
                 new SqlParameter("@preliminary_start_date", (object?)request.preliminary_start_date ?? DBNull.Value),
-                new SqlParameter("@audit_firm_person_id", request.audit_firm_person_id),
+                new SqlParameter("@audit_firm", request.audit_firm),
                 new SqlParameter("@audit_firm_person_name", request.audit_firm_person_name),
                 new SqlParameter("@audit_department", request.audit_department),
                 new SqlParameter("@info_request_date", (object?)request.info_request_date ?? DBNull.Value),

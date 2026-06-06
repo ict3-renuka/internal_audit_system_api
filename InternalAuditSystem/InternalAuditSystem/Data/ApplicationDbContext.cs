@@ -16,6 +16,12 @@ namespace InternalAuditSystem.Data
 
         public DbSet<Department> Departments{ get; set; }
 
+        public DbSet<InternalDepartment> InternalDepartments { get; set; }
+
         public DbSet<AuditRequest> AuditRequests { get; set; }
+
+        public DbSet<DraftObservation> DraftObservations { get; set; }
+
+        public DbSet<ObservationDetails> ObservationDetails { get; set; }
     }
 }

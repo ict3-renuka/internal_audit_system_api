@@ -26,6 +26,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "InternalAuditSystem.Controllers.AuditRequestController",
+    "Method": "UpdateAuditRequest",
+    "RelativePath": "api/AuditRequest/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "InternalAuditSystem.Models.AuditRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InternalAuditSystem.Controllers.CenterController",
     "Method": "CreateCenter",
     "RelativePath": "api/Center",
@@ -101,6 +122,105 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.DraftObservationController",
+    "Method": "CreateDraftObservation",
+    "RelativePath": "api/DraftObservation",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "observation",
+        "Type": "InternalAuditSystem.Models.DraftObservation",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.DraftObservationController",
+    "Method": "GetAllDraftObservations",
+    "RelativePath": "api/DraftObservation",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.InternalDepartmentController",
+    "Method": "CreateInternalDepartment",
+    "RelativePath": "api/InternalDepartment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "internalDepartment",
+        "Type": "InternalAuditSystem.Models.InternalDepartment",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.InternalDepartmentController",
+    "Method": "GetAllInternalDepartments",
+    "RelativePath": "api/InternalDepartment",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.ObservationDetailsController",
+    "Method": "CreateObservationDetails",
+    "RelativePath": "api/ObservationDetails",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "InternalAuditSystem.Models.ObservationDetails",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.ObservationDetailsController",
+    "Method": "GetAllObservationDetails",
+    "RelativePath": "api/ObservationDetails",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.ObservationDetailsController",
+    "Method": "UpdateObservationDetails",
+    "RelativePath": "api/ObservationDetails/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "InternalAuditSystem.Models.ObservationDetails",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

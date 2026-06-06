@@ -15,7 +15,7 @@ namespace InternalAuditSystem.Models
 
         public DateTime? preliminary_start_date { get; set; }
 
-        public string audit_firm_person_id { get; set; } = string.Empty;
+        public string audit_firm { get; set; } = string.Empty;
 
         public string audit_firm_person_name { get; set; } = string.Empty;
 
