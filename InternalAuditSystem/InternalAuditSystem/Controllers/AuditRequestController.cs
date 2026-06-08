@@ -18,7 +18,7 @@ namespace InternalAuditSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAuditRequest(AuditRequest request)
+        public async Task<IActionResult> CreateAuditRequest([FromBody] AuditRequest request)
         {
             await _context.Database.ExecuteSqlRawAsync(
                 "EXEC sp_InsertAuditRequest " +
