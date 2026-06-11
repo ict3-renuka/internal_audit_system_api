@@ -20,13 +20,12 @@ namespace InternalAuditSystem.Controllers
         public async Task<IActionResult> CreateDraftObservation(DraftObservation observation)
         {
             observation.creation_date = DateTime.Now;
-
             _context.DraftObservations.Add(observation);
             await _context.SaveChangesAsync();
-
             return Ok(new
             {
-                message = "Draft Observation created successfully"
+                message = "Draft Observation created successfully",
+                observation_id = observation.observation_id
             });
         }
 

@@ -216,8 +216,61 @@
         "IsRequired": true
       },
       {
+        "Name": "fields",
+        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.ObservationDetailsController",
+    "Method": "GetCombinedObservations",
+    "RelativePath": "api/ObservationDetails/combined",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.UserController",
+    "Method": "GetUsersByInternalDepartment",
+    "RelativePath": "api/User/by-internal-department/{internalDepartmentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "internalDepartmentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.UserController",
+    "Method": "Login",
+    "RelativePath": "api/User/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
         "Name": "request",
-        "Type": "InternalAuditSystem.Models.ObservationDetails",
+        "Type": "InternalAuditSystem.Models.DTO.LoginRequest",
         "IsRequired": true
       }
     ],

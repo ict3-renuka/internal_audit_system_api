@@ -23,5 +23,7 @@ namespace InternalAuditSystem.Data
         public DbSet<DraftObservation> DraftObservations { get; set; }
 
         public DbSet<ObservationDetails> ObservationDetails { get; set; }
+
+        public DbSet<User> Users { get; set; }
     }
 }

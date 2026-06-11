@@ -354,21 +354,110 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ObservationDetails"
+                "type": "object",
+                "additionalProperties": { }
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ObservationDetails"
+                "type": "object",
+                "additionalProperties": { }
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ObservationDetails"
+                "type": "object",
+                "additionalProperties": { }
               }
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ObservationDetails/combined": {
+      "get": {
+        "tags": [
+          "ObservationDetails"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/by-internal-department/{internalDepartmentId}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "internalDepartmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -554,8 +643,7 @@
           },
           "creation_date": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -572,6 +660,20 @@
             "format": "int32"
           },
           "internal_department_name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "user_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
             "type": "string",
             "nullable": true
           }
@@ -610,8 +712,8 @@
             "nullable": true
           },
           "action_time_line": {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "status": {

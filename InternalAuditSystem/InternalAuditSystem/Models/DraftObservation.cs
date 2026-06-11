@@ -7,6 +7,7 @@ namespace InternalAuditSystem.Models
     public class DraftObservation
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int observation_id { get; set; }
 
         public string area { get; set; } = string.Empty;
@@ -19,6 +20,6 @@ namespace InternalAuditSystem.Models
 
         public string recommendation { get; set; } = string.Empty;
 
-        public DateTime? creation_date { get; set; }
+        public DateTime creation_date { get; set; }
     }
 }

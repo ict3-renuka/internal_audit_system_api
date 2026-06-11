@@ -7,6 +7,7 @@ namespace InternalAuditSystem.Models
     public class ObservationDetails
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int observation_details_id { get; set; }
 
         public int observation_id { get; set; }
@@ -21,7 +22,7 @@ namespace InternalAuditSystem.Models
 
         public string? corrective_action_plan { get; set; }
 
-        public int? action_time_line { get; set; }
+        public DateTime? action_time_line { get; set; }
 
         public string? status { get; set; }
 
