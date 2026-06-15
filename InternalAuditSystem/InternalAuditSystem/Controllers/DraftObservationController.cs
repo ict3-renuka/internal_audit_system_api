@@ -36,5 +36,21 @@ namespace InternalAuditSystem.Controllers
 
             return Ok(observations);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDraftObservation(int id, DraftObservation observation)
+        {
+            var existing = await _context.DraftObservations.FindAsync(id);
+            if (existing == null) return NotFound();
+
+            existing.area = observation.area;
+            existing.subject = observation.subject;
+            existing.details = observation.details;
+            existing.risk_and_root_cause = observation.risk_and_root_cause;
+            existing.recommendation = observation.recommendation;
+
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Draft Observation updated successfully" });
+        }
     }
 }

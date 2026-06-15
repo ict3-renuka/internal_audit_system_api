@@ -183,5 +183,16 @@ namespace InternalAuditSystem.Controllers
             });
         }
 
+        [HttpGet("byObservation/{observationId}")]
+        public async Task<IActionResult> GetInternalDeptIdsByObservationId(int observationId)
+        {
+            var internalDepartmentIds = await _context.ObservationDetails
+                .Where(od => od.observation_id == observationId)
+                .Select(od => od.internal_department_id)
+                .ToListAsync();
+
+            return Ok(internalDepartmentIds);
+        }
+
     }
 }

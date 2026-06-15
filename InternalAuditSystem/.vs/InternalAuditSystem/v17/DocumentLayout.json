@@ -3,52 +3,12 @@
   "WorkspaceRootPath": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\controllers\\observationdetailscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\controllers\\observationdetailscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\server.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\server.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\controllers\\draftobservationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\controllers\\draftobservationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\models\\draftobservation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\models\\draftobservation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\models\\dto\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\models\\dto\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\controllers\\auditrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\controllers\\auditrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|c:\\bhagya projects\\api\\internalauditsystem\\internal_audit_system_api\\internalauditsystem\\internalauditsystem\\models\\auditrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{538440A9-C579-443A-95A2-6FA2ADB4138E}|InternalAuditSystem\\InternalAuditSystem.csproj|solutionrelative:internalauditsystem\\models\\auditrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,157 +18,33 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "server.txt",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\server.txt",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\server.txt",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\server.txt",
-              "RelativeToolTip": "InternalAuditSystem\\server.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2026-06-15T04:04:03.744Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "LoginResponse.cs",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Models\\DTO\\LoginResponse.cs",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\Models\\DTO\\LoginResponse.cs",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Models\\DTO\\LoginResponse.cs",
-              "RelativeToolTip": "InternalAuditSystem\\Models\\DTO\\LoginResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T08:14:11.617Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Controllers\\UserController.cs",
-              "RelativeToolTip": "InternalAuditSystem\\Controllers\\UserController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAYwCcAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T08:13:30.784Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "DraftObservation.cs",
               "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Models\\DraftObservation.cs",
               "RelativeDocumentMoniker": "InternalAuditSystem\\Models\\DraftObservation.cs",
               "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Models\\DraftObservation.cs",
               "RelativeToolTip": "InternalAuditSystem\\Models\\DraftObservation.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAswBgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAYwAwAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T07:54:22.766Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Program.cs",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\Program.cs",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Program.cs",
-              "RelativeToolTip": "InternalAuditSystem\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T07:26:14.561Z",
+              "WhenOpened": "2026-06-15T11:06:46.087Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EmailService.cs",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Services\\EmailService.cs",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\Services\\EmailService.cs",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Services\\EmailService.cs",
-              "RelativeToolTip": "InternalAuditSystem\\Services\\EmailService.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAkwEUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T07:25:28.717Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\appsettings.json",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\appsettings.json",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\appsettings.json",
-              "RelativeToolTip": "InternalAuditSystem\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-06-12T07:19:38.513Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Models\\User.cs",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\Models\\User.cs",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Models\\User.cs",
-              "RelativeToolTip": "InternalAuditSystem\\Models\\User.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAQwBcAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T07:08:50.477Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ObservationDetailsController.cs",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Controllers\\ObservationDetailsController.cs",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\Controllers\\ObservationDetailsController.cs",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Controllers\\ObservationDetailsController.cs",
-              "RelativeToolTip": "InternalAuditSystem\\Controllers\\ObservationDetailsController.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAYwFkAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T04:29:51.009Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "DraftObservationController.cs",
               "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Controllers\\DraftObservationController.cs",
               "RelativeDocumentMoniker": "InternalAuditSystem\\Controllers\\DraftObservationController.cs",
               "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Controllers\\DraftObservationController.cs",
               "RelativeToolTip": "InternalAuditSystem\\Controllers\\DraftObservationController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwB0AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAUwDMAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T04:29:30.306Z",
+              "WhenOpened": "2026-06-15T11:06:33.945Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AuditRequestController.cs",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Controllers\\AuditRequestController.cs",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\Controllers\\AuditRequestController.cs",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Controllers\\AuditRequestController.cs",
-              "RelativeToolTip": "InternalAuditSystem\\Controllers\\AuditRequestController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAcwD0AAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T11:14:09.98Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "AuditRequest.cs",
-              "DocumentMoniker": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Models\\AuditRequest.cs",
-              "RelativeDocumentMoniker": "InternalAuditSystem\\Models\\AuditRequest.cs",
-              "ToolTip": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\Models\\AuditRequest.cs",
-              "RelativeToolTip": "InternalAuditSystem\\Models\\AuditRequest.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAYwC0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T09:27:19.756Z"
             }
           ]
         }

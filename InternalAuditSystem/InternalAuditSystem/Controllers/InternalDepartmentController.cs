@@ -32,7 +32,9 @@ namespace InternalAuditSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllInternalDepartments()
         {
-            var internalDepartments = await _context.InternalDepartments.ToListAsync();
+            var internalDepartments = await _context.InternalDepartments
+                .OrderBy(d => d.internal_department_name)
+                .ToListAsync();
 
             return Ok(internalDepartments);
         }

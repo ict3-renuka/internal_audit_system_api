@@ -272,6 +272,48 @@
         }
       }
     },
+    "/api/DraftObservation/{id}": {
+      "put": {
+        "tags": [
+          "DraftObservation"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftObservation"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftObservation"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftObservation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/InternalDepartment": {
       "post": {
         "tags": [
@@ -421,6 +463,29 @@
               "type": "integer",
               "format": "int32",
               "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ObservationDetails/byObservation/{observationId}": {
+      "get": {
+        "tags": [
+          "ObservationDetails"
+        ],
+        "parameters": [
+          {
+            "name": "observationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
