@@ -39,6 +39,26 @@
         "tags": [
           "AuditRequest"
         ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -496,9 +516,9 @@
             "type": "string",
             "nullable": true
           },
-          "audit_department": {
-            "type": "string",
-            "nullable": true
+          "audit_department_id": {
+            "type": "integer",
+            "format": "int32"
           },
           "info_request_date": {
             "type": "string",

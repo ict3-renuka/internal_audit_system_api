@@ -23,7 +23,7 @@ namespace InternalAuditSystem.Controllers
             await _context.Database.ExecuteSqlRawAsync(
                 "EXEC sp_InsertAuditRequest " +
                 "@meeting_date, @description, @preliminary_start_date, " +
-                "@audit_firm, @audit_firm_person_name, @audit_department, " +
+                "@audit_firm, @audit_firm_person_name, @audit_department_id, " +
                 "@info_request_date, @info_submit_date, @field_work_start_date, " +
                 "@field_work_end_date, @exit_meeting_date, @management_discussion_date, " +
                 "@report_issued_date, @shared_to_board_date, @audit_committee_table_date",
@@ -33,7 +33,7 @@ namespace InternalAuditSystem.Controllers
                 new SqlParameter("@preliminary_start_date", (object?)request.preliminary_start_date ?? DBNull.Value),
                 new SqlParameter("@audit_firm", request.audit_firm),
                 new SqlParameter("@audit_firm_person_name", request.audit_firm_person_name),
-                new SqlParameter("@audit_department", request.audit_department),
+                new SqlParameter("@audit_department_id", request.audit_department_id),
                 new SqlParameter("@info_request_date", (object?)request.info_request_date ?? DBNull.Value),
                 new SqlParameter("@info_submit_date", (object?)request.info_submit_date ?? DBNull.Value),
                 new SqlParameter("@field_work_start_date", (object?)request.field_work_start_date ?? DBNull.Value),
@@ -49,11 +49,24 @@ namespace InternalAuditSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAuditRequests()
+        public async Task<IActionResult> GetAllAuditRequests([FromQuery] int page = 1, [FromQuery] int pageSize = 20)
         {
-            var auditRequests = await _context.AuditRequests.ToListAsync();
+            var totalCount = await _context.AuditRequests.CountAsync();
 
-            return Ok(auditRequests);
+            var auditRequests = await _context.AuditRequests
+                .OrderByDescending(a => a.creation_date)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return Ok(new
+            {
+                data = auditRequests,
+                totalCount = totalCount,
+                page = page,
+                pageSize = pageSize,
+                totalPages = (int)Math.Ceiling((double)totalCount / pageSize)
+            });
         }
 
         [HttpPut("{id}")]

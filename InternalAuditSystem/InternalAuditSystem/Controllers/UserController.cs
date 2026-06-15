@@ -38,6 +38,7 @@ namespace InternalAuditSystem.Controllers
                 name = user.name,
                 user_name = user.user_name,
                 designation = user.designation,
+                email = user.email,
                 internal_department_id = user.internal_department_id,
                 isActive = user.IsActive
             };

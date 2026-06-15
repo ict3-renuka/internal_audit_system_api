@@ -21,6 +21,8 @@ namespace InternalAuditSystem.Models
 
         public bool IsActive { get; set; }
 
+        public string email { get; set; }
+
         public DateTime creation_date { get; set; }
 
         public DateTime last_modified_date { get; set; }

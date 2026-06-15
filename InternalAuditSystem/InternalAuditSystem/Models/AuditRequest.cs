@@ -19,7 +19,7 @@ namespace InternalAuditSystem.Models
 
         public string audit_firm_person_name { get; set; } = string.Empty;
 
-        public string audit_department { get; set; } = string.Empty;
+        public int audit_department_id { get; set; }
 
         public DateTime? info_request_date { get; set; }
 

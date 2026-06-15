@@ -138,3 +138,4 @@ C:\Bhagya Projects\API\InternalAuditSystem\internal_audit_system_api\InternalAud
 C:\Bhagya Projects\API\InternalAuditSystem\internal_audit_system_api\InternalAuditSystem\InternalAuditSystem\obj\Debug\net8.0\InternalAuditSystem.pdb
 C:\Bhagya Projects\API\InternalAuditSystem\internal_audit_system_api\InternalAuditSystem\InternalAuditSystem\obj\Debug\net8.0\InternalAuditSystem.genruntimeconfig.cache
 C:\Bhagya Projects\API\InternalAuditSystem\internal_audit_system_api\InternalAuditSystem\InternalAuditSystem\obj\Debug\net8.0\ref\InternalAuditSystem.dll
+C:\Bhagya Projects\API\InternalAuditSystem\internal_audit_system_api\InternalAuditSystem\InternalAuditSystem\bin\Debug\net8.0\server.txt
