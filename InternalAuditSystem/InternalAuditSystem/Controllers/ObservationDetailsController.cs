@@ -5,6 +5,7 @@ using InternalAuditSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace InternalAuditSystem.Controllers
 {
@@ -108,18 +109,32 @@ namespace InternalAuditSystem.Controllers
             fields.TryGetValue("status", out var status);
             fields.TryGetValue("remark", out var remark);
             fields.TryGetValue("remarked_date", out var rd);
+            fields.TryGetValue("is_active", out var isActive);
+
+            object isActiveValue = DBNull.Value;
+
+            if (isActive is JsonElement je)
+            {
+                if (je.ValueKind == JsonValueKind.True || je.ValueKind == JsonValueKind.False)
+                    isActiveValue = je.GetBoolean();
+            }
+            else if (isActive is bool b)
+            {
+                isActiveValue = b;
+            }
 
             await _context.Database.ExecuteSqlRawAsync(
                 "EXEC sp_UpdateObservationDetails " +
                 "@observation_details_id, @management_response, @corrective_action_plan, " +
-                "@action_time_line, @status, @remark, @remarked_date",
+                "@action_time_line, @status, @remark, @remarked_date, @is_active",
                 new SqlParameter("@observation_details_id", id),
                 new SqlParameter("@management_response", (object?)mgmtResponse?.ToString() ?? DBNull.Value),
                 new SqlParameter("@corrective_action_plan", (object?)cap?.ToString() ?? DBNull.Value),
                 new SqlParameter("@action_time_line", (object?)atl?.ToString() ?? DBNull.Value),
                 new SqlParameter("@status", (object?)status?.ToString() ?? DBNull.Value),
                 new SqlParameter("@remark", (object?)remark?.ToString() ?? DBNull.Value),
-                new SqlParameter("@remarked_date", (object?)rd?.ToString() ?? DBNull.Value)
+                new SqlParameter("@remarked_date", (object?)rd?.ToString() ?? DBNull.Value),
+                new SqlParameter("@is_active", isActiveValue)
             );
 
             return Ok(new { message = "Observation Details updated successfully" });
@@ -128,7 +143,8 @@ namespace InternalAuditSystem.Controllers
         [HttpGet("combined")]
         public async Task<IActionResult> GetCombinedObservations(
         [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 20)
+        [FromQuery] int pageSize = 20,
+        [FromQuery] bool includeInactive = false)
         {
             var query = from o in _context.DraftObservations
 
@@ -143,6 +159,8 @@ namespace InternalAuditSystem.Controllers
                         join id in _context.InternalDepartments
                             on od.internal_department_id equals id.internal_department_id into intDepts
                         from id in intDepts.DefaultIfEmpty()
+
+                        where od == null || includeInactive || od.is_active
 
                         orderby o.creation_date descending
                         select new CombinedObservation
@@ -165,6 +183,7 @@ namespace InternalAuditSystem.Controllers
                             Status = od != null ? od.status : null,
                             Remark = od != null ? od.remark : null,
                             RemarkedDate = od != null ? od.remarked_date : (DateTime?)null,
+                            IsActive = od != null ? od.is_active : true,
                         };
 
             var totalCount = await query.CountAsync();
@@ -187,7 +206,7 @@ namespace InternalAuditSystem.Controllers
         public async Task<IActionResult> GetInternalDeptIdsByObservationId(int observationId)
         {
             var internalDepartmentIds = await _context.ObservationDetails
-                .Where(od => od.observation_id == observationId)
+                .Where(od => od.observation_id == observationId && od.is_active)
                 .Select(od => od.internal_department_id)
                 .ToListAsync();
 

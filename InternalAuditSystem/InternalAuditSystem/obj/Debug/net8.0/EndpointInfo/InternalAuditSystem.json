@@ -464,6 +464,14 @@
               "format": "int32",
               "default": 20
             }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
         ],
         "responses": {
@@ -821,6 +829,9 @@
           "last_modified_date": {
             "type": "string",
             "format": "date-time"
+          },
+          "is_active": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

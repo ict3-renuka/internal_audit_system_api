@@ -33,5 +33,7 @@ namespace InternalAuditSystem.Models
         public DateTime creation_date { get; set; }
 
         public DateTime last_modified_date { get; set; }
+
+        public bool is_active { get; set; } = true;
     }
 }

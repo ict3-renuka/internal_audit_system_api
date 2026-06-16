@@ -20,5 +20,6 @@
         public string? Status { get; set; }
         public string? Remark { get; set; }
         public DateTime? RemarkedDate { get; set; }
+        public bool IsActive { get; set; }
     }
 }
