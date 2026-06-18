@@ -209,6 +209,59 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "InternalAuditSystem.Controllers.ObservationAttachmentController",
+    "Method": "Delete",
+    "RelativePath": "api/ObservationAttachment/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.ObservationAttachmentController",
+    "Method": "DownloadByObservation",
+    "RelativePath": "api/ObservationAttachment/download/by-observation/{observationId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "observationId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InternalAuditSystem.Controllers.ObservationAttachmentController",
+    "Method": "UploadPdf",
+    "RelativePath": "api/ObservationAttachment/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "observationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InternalAuditSystem.Controllers.ObservationDetailsController",
     "Method": "CreateObservationDetails",
     "RelativePath": "api/ObservationDetails",

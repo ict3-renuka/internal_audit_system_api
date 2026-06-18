@@ -184,6 +184,20 @@ namespace InternalAuditSystem.Controllers
                             Remark = od != null ? od.remark : null,
                             RemarkedDate = od != null ? od.remarked_date : (DateTime?)null,
                             IsActive = od != null ? od.is_active : true,
+                            HasPdf = _context.ObservationAttachments
+                                    .Any(a => a.observation_id == o.observation_id),
+
+                            AttachmentId = _context.ObservationAttachments
+                                            .Where(a => a.observation_id == o.observation_id)
+                                            .OrderByDescending(a => a.attachment_id)
+                                            .Select(a => (int?)a.attachment_id)
+                                            .FirstOrDefault(),
+
+                            FileName = _context.ObservationAttachments
+                                        .Where(a => a.observation_id == o.observation_id)
+                                        .OrderByDescending(a => a.attachment_id)
+                                        .Select(a => a.file_name)
+                                        .FirstOrDefault()
                         };
 
             var totalCount = await query.CountAsync();

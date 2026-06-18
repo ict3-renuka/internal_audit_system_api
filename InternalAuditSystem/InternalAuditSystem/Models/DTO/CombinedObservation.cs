@@ -21,5 +21,8 @@
         public string? Remark { get; set; }
         public DateTime? RemarkedDate { get; set; }
         public bool IsActive { get; set; }
+        public bool HasPdf { get; set; }
+        public int? AttachmentId { get; set; }
+        public string? FileName { get; set; }
     }
 }
