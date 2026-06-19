@@ -2,10 +2,12 @@
 using InternalAuditSystem.Models;
 using InternalAuditSystem.Models.DTO;
 using InternalAuditSystem.Services;
+using InternalAuditSystem.Services.Report;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using QuestPDF.Fluent;
 
 namespace InternalAuditSystem.Controllers
 {
@@ -166,6 +168,7 @@ namespace InternalAuditSystem.Controllers
                         select new CombinedObservation
                         {
                             ObservationId = o.observation_id,
+                            ReviewReference = o.review_reference,
                             Area = o.area,
                             Subject = o.subject,
                             Details = o.details,
@@ -225,6 +228,68 @@ namespace InternalAuditSystem.Controllers
                 .ToListAsync();
 
             return Ok(internalDepartmentIds);
+        }
+
+        [HttpGet("observation-report")]
+        public async Task<IActionResult> GetReport(
+            [FromQuery] int? departmentId,
+            [FromQuery] int? internalDepartmentId,
+            [FromQuery] string? status,
+            [FromQuery] DateTime? fromDate,
+            [FromQuery] DateTime? toDate)
+        {
+            var query = from o in _context.DraftObservations
+                        join od in _context.ObservationDetails
+                            on o.observation_id equals od.observation_id
+                        join d in _context.Departments
+                            on od.department_id equals d.department_id
+                        join id in _context.InternalDepartments
+                            on od.internal_department_id equals id.internal_department_id
+                        where od.is_active == true
+                        select new CombinedObservation
+                        {
+                            ObservationId = o.observation_id,
+                            DepartmentId = d.department_id,
+                            InternalDepartmentId = id.internal_department_id,
+                            ReviewReference = o.review_reference,
+                            Area = o.area,
+                            Subject = o.subject,
+                            RiskAndRootCause = o.risk_and_root_cause,
+                            Recommendation = o.recommendation,
+                            DepartmentName = d.department_name,
+                            InternalDepartmentName = id.internal_department_name,
+                            ManagementResponse = od.management_response,
+                            CorrectiveActionPlan = od.corrective_action_plan,
+                            Status = od.status,
+                            Remark = od.remark,
+                            ObservationCreationDate = o.creation_date
+                        };
+
+            if (departmentId.HasValue)
+                query = query.Where(x => x.DepartmentId == departmentId.Value);
+
+            if (internalDepartmentId.HasValue)
+                query = query.Where(x => x.InternalDepartmentId == internalDepartmentId.Value);
+
+            if (!string.IsNullOrWhiteSpace(status))
+                query = query.Where(x => x.Status == status);
+
+            if (fromDate.HasValue)
+                query = query.Where(x => x.ObservationCreationDate >= fromDate);
+
+            if (toDate.HasValue)
+                query = query.Where(x => x.ObservationCreationDate <= toDate);
+
+            var data = await query
+                        .OrderByDescending(o => o.ObservationCreationDate)
+                        .ToListAsync();
+
+            var document = new ObservationReportDocument(data);
+            var pdf = document.GeneratePdf();
+
+            //return File(pdf, "application/pdf", "ObservationReport.pdf");
+            Response.Headers["Content-Disposition"] = "inline; filename=ObservationReport.pdf";
+            return File(pdf, "application/pdf");
         }
 
     }

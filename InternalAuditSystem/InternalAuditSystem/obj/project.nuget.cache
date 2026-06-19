@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4j4k9kubPU4=",
+  "dgSpecHash": "9wvxl+CbcSk=",
   "success": true,
   "projectFilePath": "C:\\Bhagya Projects\\API\\InternalAuditSystem\\internal_audit_system_api\\InternalAuditSystem\\InternalAuditSystem\\InternalAuditSystem.csproj",
   "expectedPackageFiles": [
@@ -48,6 +48,7 @@
     "C:\\Users\\Bhagya Ariyadasa\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\Bhagya Ariyadasa\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Bhagya Ariyadasa\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\Bhagya Ariyadasa\\.nuget\\packages\\questpdf\\2026.6.0\\questpdf.2026.6.0.nupkg.sha512",
     "C:\\Users\\Bhagya Ariyadasa\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
     "C:\\Users\\Bhagya Ariyadasa\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
     "C:\\Users\\Bhagya Ariyadasa\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.6.2\\swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",

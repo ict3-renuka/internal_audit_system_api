@@ -43,6 +43,7 @@ namespace InternalAuditSystem.Controllers
             var existing = await _context.DraftObservations.FindAsync(id);
             if (existing == null) return NotFound();
 
+            existing.review_reference = observation.review_reference;
             existing.area = observation.area;
             existing.subject = observation.subject;
             existing.details = observation.details;
