@@ -40,18 +40,18 @@ namespace InternalAuditSystem.Services.Report
                 {
                     table.ColumnsDefinition(columns =>
                     {
-                        columns.ConstantColumn(60);    // Review Reference
-                        columns.ConstantColumn(60);   // Area
-                        columns.RelativeColumn(2);     // Subject
-                        columns.RelativeColumn(2);     // Risk
-                        columns.RelativeColumn(2);     // Recommendation
-                        columns.ConstantColumn(80);  // Department
-                        columns.ConstantColumn(80);  // Internal Dept
-                        columns.RelativeColumn(2);  // Management Res
-                        columns.RelativeColumn(2);  // Corrective Action Plan
-                        columns.ConstantColumn(50);   // Status
-                        columns.ConstantColumn(60);   //Remark
-                        columns.ConstantColumn(70);  // Date
+                        columns.RelativeColumn(1);  // Review Reference
+                        columns.RelativeColumn(1);  // Area
+                        columns.RelativeColumn(2);  // Subject
+                        columns.RelativeColumn(3);  // Risk
+                        columns.RelativeColumn(3);  // Recommendation
+                        columns.RelativeColumn(2);  // Department
+                        columns.RelativeColumn(2);  // Internal Dept
+                        columns.RelativeColumn(3);  // Management Res
+                        columns.RelativeColumn(3);  // Corrective Action Plan
+                        columns.RelativeColumn(1);  // Status
+                        columns.RelativeColumn(2);  // Remark
+                        columns.RelativeColumn(1);  // Date
                     });
 
                     table.Header(header =>

@@ -1,4 +1,5 @@
-﻿using InternalAuditSystem.Data;
+﻿using Azure;
+using InternalAuditSystem.Data;
 using InternalAuditSystem.Models;
 using InternalAuditSystem.Models.DTO;
 using InternalAuditSystem.Services;
@@ -6,8 +7,9 @@ using InternalAuditSystem.Services.Report;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 using QuestPDF.Fluent;
+using System.Data;
+using System.Text.Json;
 
 namespace InternalAuditSystem.Controllers
 {
@@ -17,11 +19,13 @@ namespace InternalAuditSystem.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IEmailService _emailService;
+        private readonly ILogger<ObservationDetailsController> _logger;
 
-        public ObservationDetailsController(ApplicationDbContext context, IEmailService emailService)
+        public ObservationDetailsController(ApplicationDbContext context, IEmailService emailService, ILogger<ObservationDetailsController> logger)
         {
             _context = context;
             _emailService = emailService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -29,11 +33,13 @@ namespace InternalAuditSystem.Controllers
         {
             try
             {
+                var idParam = new SqlParameter("@new_id", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
                 await _context.Database.ExecuteSqlRawAsync(
                     "EXEC sp_InsertObservationDetails " +
                     "@observation_id, @department_id, @internal_department_id, " +
                     "@responsible_user, @management_response, @corrective_action_plan, " +
-                    "@action_time_line, @status, @remark, @remarked_date",
+                    "@action_time_line, @status, @remark, @remarked_date, @new_id OUTPUT",
                     new SqlParameter("@observation_id", request.observation_id),
                     new SqlParameter("@department_id", request.department_id),
                     new SqlParameter("@internal_department_id", request.internal_department_id),
@@ -43,8 +49,11 @@ namespace InternalAuditSystem.Controllers
                     new SqlParameter("@action_time_line", (object?)request.action_time_line ?? DBNull.Value),
                     new SqlParameter("@status", (object?)request.status ?? DBNull.Value),
                     new SqlParameter("@remark", (object?)request.remark ?? DBNull.Value),
-                    new SqlParameter("@remarked_date", (object?)request.remarked_date ?? DBNull.Value)
+                    new SqlParameter("@remarked_date", (object?)request.remarked_date ?? DBNull.Value),
+                    idParam
                 );
+
+                int newId = idParam.Value is int value ? value : 0;
 
                 var observation = await _context.DraftObservations
                     .FirstOrDefaultAsync(o => o.observation_id == request.observation_id);
@@ -86,11 +95,12 @@ namespace InternalAuditSystem.Controllers
                 return Ok(new
                 {
                     message = "Observation Details created successfully",
-                    observation_details_id = request.observation_details_id
+                    observation_details_id = newId
                 });
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to create observation detail");
                 return StatusCode(500, new { error = ex.Message, inner = ex.InnerException?.Message });
             }
         }
@@ -98,48 +108,64 @@ namespace InternalAuditSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllObservationDetails()
         {
-            var data = await _context.ObservationDetails.ToListAsync();
-            return Ok(data);
+            try
+            {
+                var data = await _context.ObservationDetails.ToListAsync();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to fetch observation details");
+                return StatusCode(500, new { message = "Failed to fetch observation details." });
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateObservationDetails(int id, [FromBody] Dictionary<string, object?> fields)
         {
-            fields.TryGetValue("management_response", out var mgmtResponse);
-            fields.TryGetValue("corrective_action_plan", out var cap);
-            fields.TryGetValue("action_time_line", out var atl);
-            fields.TryGetValue("status", out var status);
-            fields.TryGetValue("remark", out var remark);
-            fields.TryGetValue("remarked_date", out var rd);
-            fields.TryGetValue("is_active", out var isActive);
-
-            object isActiveValue = DBNull.Value;
-
-            if (isActive is JsonElement je)
+            try
             {
-                if (je.ValueKind == JsonValueKind.True || je.ValueKind == JsonValueKind.False)
-                    isActiveValue = je.GetBoolean();
+                fields.TryGetValue("management_response", out var mgmtResponse);
+                fields.TryGetValue("corrective_action_plan", out var cap);
+                fields.TryGetValue("action_time_line", out var atl);
+                fields.TryGetValue("status", out var status);
+                fields.TryGetValue("remark", out var remark);
+                fields.TryGetValue("remarked_date", out var rd);
+                fields.TryGetValue("is_active", out var isActive);
+
+                object isActiveValue = DBNull.Value;
+
+                if (isActive is JsonElement je)
+                {
+                    if (je.ValueKind == JsonValueKind.True || je.ValueKind == JsonValueKind.False)
+                        isActiveValue = je.GetBoolean();
+                }
+                else if (isActive is bool b)
+                {
+                    isActiveValue = b;
+                }
+
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC sp_UpdateObservationDetails " +
+                    "@observation_details_id, @management_response, @corrective_action_plan, " +
+                    "@action_time_line, @status, @remark, @remarked_date, @is_active",
+                    new SqlParameter("@observation_details_id", id),
+                    new SqlParameter("@management_response", (object?)mgmtResponse?.ToString() ?? DBNull.Value),
+                    new SqlParameter("@corrective_action_plan", (object?)cap?.ToString() ?? DBNull.Value),
+                    new SqlParameter("@action_time_line", (object?)atl?.ToString() ?? DBNull.Value),
+                    new SqlParameter("@status", (object?)status?.ToString() ?? DBNull.Value),
+                    new SqlParameter("@remark", (object?)remark?.ToString() ?? DBNull.Value),
+                    new SqlParameter("@remarked_date", (object?)rd?.ToString() ?? DBNull.Value),
+                    new SqlParameter("@is_active", isActiveValue)
+                );
+
+                return Ok(new { message = "Observation Details updated successfully" });
             }
-            else if (isActive is bool b)
+            catch (Exception ex)
             {
-                isActiveValue = b;
+                _logger.LogError(ex, "Failed to update observation details");
+                return StatusCode(500, new { message = "Failed to update observation details." });
             }
-
-            await _context.Database.ExecuteSqlRawAsync(
-                "EXEC sp_UpdateObservationDetails " +
-                "@observation_details_id, @management_response, @corrective_action_plan, " +
-                "@action_time_line, @status, @remark, @remarked_date, @is_active",
-                new SqlParameter("@observation_details_id", id),
-                new SqlParameter("@management_response", (object?)mgmtResponse?.ToString() ?? DBNull.Value),
-                new SqlParameter("@corrective_action_plan", (object?)cap?.ToString() ?? DBNull.Value),
-                new SqlParameter("@action_time_line", (object?)atl?.ToString() ?? DBNull.Value),
-                new SqlParameter("@status", (object?)status?.ToString() ?? DBNull.Value),
-                new SqlParameter("@remark", (object?)remark?.ToString() ?? DBNull.Value),
-                new SqlParameter("@remarked_date", (object?)rd?.ToString() ?? DBNull.Value),
-                new SqlParameter("@is_active", isActiveValue)
-            );
-
-            return Ok(new { message = "Observation Details updated successfully" });
         }
 
         [HttpGet("combined")]
@@ -148,86 +174,102 @@ namespace InternalAuditSystem.Controllers
         [FromQuery] int pageSize = 20,
         [FromQuery] bool includeInactive = false)
         {
-            var query = from o in _context.DraftObservations
+            try
+            {
+                var query = from o in _context.DraftObservations
 
-                        join od in _context.ObservationDetails
-                            on o.observation_id equals od.observation_id into details
-                        from od in details.DefaultIfEmpty()
+                            join od in _context.ObservationDetails
+                                on o.observation_id equals od.observation_id into details
+                            from od in details.DefaultIfEmpty()
 
-                        join d in _context.Departments
-                            on od.department_id equals d.department_id into depts
-                        from d in depts.DefaultIfEmpty()
+                            join d in _context.Departments
+                                on od.department_id equals d.department_id into depts
+                            from d in depts.DefaultIfEmpty()
 
-                        join id in _context.InternalDepartments
-                            on od.internal_department_id equals id.internal_department_id into intDepts
-                        from id in intDepts.DefaultIfEmpty()
+                            join id in _context.InternalDepartments
+                                on od.internal_department_id equals id.internal_department_id into intDepts
+                            from id in intDepts.DefaultIfEmpty()
 
-                        where od == null || includeInactive || od.is_active
+                            where od == null || includeInactive || od.is_active
 
-                        orderby o.creation_date descending
-                        select new CombinedObservation
-                        {
-                            ObservationId = o.observation_id,
-                            ReviewReference = o.review_reference,
-                            Area = o.area,
-                            Subject = o.subject,
-                            Details = o.details,
-                            RiskAndRootCause = o.risk_and_root_cause,
-                            Recommendation = o.recommendation,
-                            ObservationCreationDate = o.creation_date,
-                            ObservationDetailsId = od != null ? od.observation_details_id : (int?)null,
-                            DepartmentName = d != null ? d.department_name : null,
-                            InternalDepartmentName = id != null ? id.internal_department_name : null,
-                            InternalDepartmentId = od != null ? od.internal_department_id : (int?)null,
-                            ResponsibleUser = od != null ? od.responsible_user : null,
-                            ManagementResponse = od != null ? od.management_response : null,
-                            CorrectiveActionPlan = od != null ? od.corrective_action_plan : null,
-                            ActionTimeLine = od != null ? od.action_time_line : (DateTime?)null,
-                            Status = od != null ? od.status : null,
-                            Remark = od != null ? od.remark : null,
-                            RemarkedDate = od != null ? od.remarked_date : (DateTime?)null,
-                            IsActive = od != null ? od.is_active : true,
-                            HasPdf = _context.ObservationAttachments
-                                    .Any(a => a.observation_id == o.observation_id),
+                            orderby o.creation_date descending
+                            select new CombinedObservation
+                            {
+                                ObservationId = o.observation_id,
+                                ReviewReference = o.review_reference,
+                                Area = o.area,
+                                Subject = o.subject,
+                                Details = o.details,
+                                RiskAndRootCause = o.risk_and_root_cause,
+                                Recommendation = o.recommendation,
+                                ObservationCreationDate = o.creation_date,
+                                ObservationDetailsId = od != null ? od.observation_details_id : (int?)null,
+                                DepartmentName = d != null ? d.department_name : null,
+                                InternalDepartmentName = id != null ? id.internal_department_name : null,
+                                InternalDepartmentId = od != null ? od.internal_department_id : (int?)null,
+                                ResponsibleUser = od != null ? od.responsible_user : null,
+                                ManagementResponse = od != null ? od.management_response : null,
+                                CorrectiveActionPlan = od != null ? od.corrective_action_plan : null,
+                                ActionTimeLine = od != null ? od.action_time_line : (DateTime?)null,
+                                Status = od != null ? od.status : null,
+                                Remark = od != null ? od.remark : null,
+                                RemarkedDate = od != null ? od.remarked_date : (DateTime?)null,
+                                IsActive = od != null ? od.is_active : true,
+                                HasPdf = _context.ObservationAttachments
+                                        .Any(a => a.observation_id == o.observation_id),
 
-                            AttachmentId = _context.ObservationAttachments
+                                AttachmentId = _context.ObservationAttachments
+                                                .Where(a => a.observation_id == o.observation_id)
+                                                .OrderByDescending(a => a.attachment_id)
+                                                .Select(a => (int?)a.attachment_id)
+                                                .FirstOrDefault(),
+
+                                FileName = _context.ObservationAttachments
                                             .Where(a => a.observation_id == o.observation_id)
                                             .OrderByDescending(a => a.attachment_id)
-                                            .Select(a => (int?)a.attachment_id)
-                                            .FirstOrDefault(),
+                                            .Select(a => a.file_name)
+                                            .FirstOrDefault()
+                            };
 
-                            FileName = _context.ObservationAttachments
-                                        .Where(a => a.observation_id == o.observation_id)
-                                        .OrderByDescending(a => a.attachment_id)
-                                        .Select(a => a.file_name)
-                                        .FirstOrDefault()
-                        };
+                var totalCount = await query.CountAsync();
+                var items = await query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
 
-            var totalCount = await query.CountAsync();
-            var items = await query
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            return Ok(new
+                return Ok(new
+                {
+                    total_count = totalCount,
+                    page,
+                    page_size = pageSize,
+                    total_pages = (int)Math.Ceiling(totalCount / (double)pageSize),
+                    items
+                });
+            }
+            catch (Exception ex)
             {
-                total_count = totalCount,
-                page,
-                page_size = pageSize,
-                total_pages = (int)Math.Ceiling(totalCount / (double)pageSize),
-                items
-            });
+                _logger.LogError(ex, "Failed to get combined observations");
+                return StatusCode(500, new { message = "Failed to get combined observations." });
+            }
         }
 
         [HttpGet("byObservation/{observationId}")]
         public async Task<IActionResult> GetInternalDeptIdsByObservationId(int observationId)
         {
-            var internalDepartmentIds = await _context.ObservationDetails
-                .Where(od => od.observation_id == observationId && od.is_active)
-                .Select(od => od.internal_department_id)
-                .ToListAsync();
+            try
+            {
+                var internalDepartmentIds = await _context.ObservationDetails
+                    .Where(od => od.observation_id == observationId && od.is_active)
+                    .Select(od => od.internal_department_id)
+                    .ToListAsync();
 
-            return Ok(internalDepartmentIds);
+                return Ok(internalDepartmentIds);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to fetch internal department");
+                return StatusCode(500, new { message = "Failed to fetch internal department." });
+            }
         }
 
         [HttpGet("observation-report")]
@@ -238,58 +280,66 @@ namespace InternalAuditSystem.Controllers
             [FromQuery] DateTime? fromDate,
             [FromQuery] DateTime? toDate)
         {
-            var query = from o in _context.DraftObservations
-                        join od in _context.ObservationDetails
-                            on o.observation_id equals od.observation_id
-                        join d in _context.Departments
-                            on od.department_id equals d.department_id
-                        join id in _context.InternalDepartments
-                            on od.internal_department_id equals id.internal_department_id
-                        where od.is_active == true
-                        select new CombinedObservation
-                        {
-                            ObservationId = o.observation_id,
-                            DepartmentId = d.department_id,
-                            InternalDepartmentId = id.internal_department_id,
-                            ReviewReference = o.review_reference,
-                            Area = o.area,
-                            Subject = o.subject,
-                            RiskAndRootCause = o.risk_and_root_cause,
-                            Recommendation = o.recommendation,
-                            DepartmentName = d.department_name,
-                            InternalDepartmentName = id.internal_department_name,
-                            ManagementResponse = od.management_response,
-                            CorrectiveActionPlan = od.corrective_action_plan,
-                            Status = od.status,
-                            Remark = od.remark,
-                            ObservationCreationDate = o.creation_date
-                        };
+            try
+            {
+                var query = from o in _context.DraftObservations
+                            join od in _context.ObservationDetails
+                                on o.observation_id equals od.observation_id
+                            join d in _context.Departments
+                                on od.department_id equals d.department_id
+                            join id in _context.InternalDepartments
+                                on od.internal_department_id equals id.internal_department_id
+                            where od.is_active == true
+                            select new CombinedObservation
+                            {
+                                ObservationId = o.observation_id,
+                                DepartmentId = d.department_id,
+                                InternalDepartmentId = id.internal_department_id,
+                                ReviewReference = o.review_reference,
+                                Area = o.area,
+                                Subject = o.subject,
+                                RiskAndRootCause = o.risk_and_root_cause,
+                                Recommendation = o.recommendation,
+                                DepartmentName = d.department_name,
+                                InternalDepartmentName = id.internal_department_name,
+                                ManagementResponse = od.management_response,
+                                CorrectiveActionPlan = od.corrective_action_plan,
+                                Status = od.status,
+                                Remark = od.remark,
+                                ObservationCreationDate = o.creation_date
+                            };
 
-            if (departmentId.HasValue)
-                query = query.Where(x => x.DepartmentId == departmentId.Value);
+                if (departmentId.HasValue)
+                    query = query.Where(x => x.DepartmentId == departmentId.Value);
 
-            if (internalDepartmentId.HasValue)
-                query = query.Where(x => x.InternalDepartmentId == internalDepartmentId.Value);
+                if (internalDepartmentId.HasValue)
+                    query = query.Where(x => x.InternalDepartmentId == internalDepartmentId.Value);
 
-            if (!string.IsNullOrWhiteSpace(status))
-                query = query.Where(x => x.Status == status);
+                if (!string.IsNullOrWhiteSpace(status))
+                    query = query.Where(x => x.Status == status);
 
-            if (fromDate.HasValue)
-                query = query.Where(x => x.ObservationCreationDate >= fromDate);
+                if (fromDate.HasValue)
+                    query = query.Where(x => x.ObservationCreationDate >= fromDate);
 
-            if (toDate.HasValue)
-                query = query.Where(x => x.ObservationCreationDate <= toDate);
+                if (toDate.HasValue)
+                    query = query.Where(x => x.ObservationCreationDate <= toDate);
 
-            var data = await query
-                        .OrderByDescending(o => o.ObservationCreationDate)
-                        .ToListAsync();
+                var data = await query
+                            .OrderByDescending(o => o.ObservationCreationDate)
+                            .ToListAsync();
 
-            var document = new ObservationReportDocument(data);
-            var pdf = document.GeneratePdf();
+                var document = new ObservationReportDocument(data);
+                var pdf = document.GeneratePdf();
 
-            //return File(pdf, "application/pdf", "ObservationReport.pdf");
-            Response.Headers["Content-Disposition"] = "inline; filename=ObservationReport.pdf";
-            return File(pdf, "application/pdf");
+                //return File(pdf, "application/pdf", "ObservationReport.pdf");
+                Response.Headers["Content-Disposition"] = "inline; filename=ObservationReport.pdf";
+                return File(pdf, "application/pdf");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to fetch report");
+                return StatusCode(500, new { message = "Failed to fetch report." });
+            }
         }
 
     }

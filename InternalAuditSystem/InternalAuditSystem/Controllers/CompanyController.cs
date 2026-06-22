@@ -2,6 +2,7 @@
 using InternalAuditSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace InternalAuditSystem.Controllers
 {
@@ -10,31 +11,49 @@ namespace InternalAuditSystem.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<AuditRequestController> _logger;
 
-        public CompanyController(ApplicationDbContext context)
+        public CompanyController(ApplicationDbContext context, ILogger<AuditRequestController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCompany(Company company)
         {
-            _context.Companies.Add(company);
-
-            await _context.SaveChangesAsync();
-
-            return Ok(new
+            try
             {
-                message = "Company created successfully"
-            });
+                _context.Companies.Add(company);
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    message = "Company created successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to create company");
+                return StatusCode(500, new { message = "Failed to create company." });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllCompanies()
         {
-            var companies = await _context.Companies.ToListAsync();
+            try
+            {
+                var companies = await _context.Companies.ToListAsync();
 
-            return Ok(companies);
+                return Ok(companies);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to fetch companies");
+                return StatusCode(500, new { message = "Failed to fetch companies." });
+            }
         }
     }
 }
