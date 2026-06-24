@@ -62,7 +62,9 @@ namespace InternalAuditSystem.Controllers
                 if (file == null)
                     return NotFound();
 
-                Response.Headers["Content-Disposition"] = $"inline; filename=\"{file.file_name}.pdf\"";
+                var safeFileName = file.file_name.Replace("\"", "");
+
+                Response.Headers["Content-Disposition"] = $"inline; filename=\"{safeFileName}\"";
 
                 return File(file.file_data, "application/pdf");
             }

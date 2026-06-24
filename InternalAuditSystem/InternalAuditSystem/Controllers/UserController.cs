@@ -51,8 +51,11 @@ namespace InternalAuditSystem.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to login");
-                return StatusCode(500, new { message = "Failed to login." });
+                return StatusCode(500, new
+                {
+                    message = ex.Message,
+                    inner = ex.InnerException?.Message
+                });
             }
         }
 

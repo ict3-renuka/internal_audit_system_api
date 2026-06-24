@@ -284,12 +284,15 @@ namespace InternalAuditSystem.Controllers
             {
                 var query = from o in _context.DraftObservations
                             join od in _context.ObservationDetails
-                                on o.observation_id equals od.observation_id
+                                on o.observation_id equals od.observation_id into odGroup
+                            from od in odGroup.DefaultIfEmpty()  
                             join d in _context.Departments
-                                on od.department_id equals d.department_id
+                                on od.department_id equals d.department_id into dGroup
+                            from d in dGroup.DefaultIfEmpty()
                             join id in _context.InternalDepartments
-                                on od.internal_department_id equals id.internal_department_id
-                            where od.is_active == true
+                                on od.internal_department_id equals id.internal_department_id into idGroup
+                            from id in idGroup.DefaultIfEmpty()
+                           // where od.is_active == true
                             select new CombinedObservation
                             {
                                 ObservationId = o.observation_id,
