@@ -2,8 +2,8 @@
 {
     public class CombinedObservation
     {
+        public int AuditRequestId { get; set; }
         public int ObservationId { get; set; }
-        public string ReviewReference { get; set; }
         public string Area { get; set; }
         public string Subject { get; set; }
         public string Details { get; set; }
@@ -26,5 +26,6 @@
         public bool HasPdf { get; set; }
         public int? AttachmentId { get; set; }
         public string? FileName { get; set; }
+        public string? AmendmentManagementResponse { get; set; }
     }
 }

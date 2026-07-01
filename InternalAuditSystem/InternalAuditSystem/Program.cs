@@ -16,10 +16,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
+    options.AddPolicy("FlutterAppPolicy",
         policy =>
         {
-            policy.AllowAnyOrigin()
+            //policy.AllowAnyOrigin()
+            //       .AllowAnyHeader()
+            //       .AllowAnyMethod();
+
+            policy.WithOrigins("https://auditsystem")
+            .AllowAnyOrigin()
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
@@ -31,7 +36,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 var app = builder.Build();
-app.UseCors("AllowAll");
+app.UseCors("FlutterAppPolicy");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -27,17 +27,19 @@ namespace InternalAuditSystem.Controllers
             {
                 await _context.Database.ExecuteSqlRawAsync(
                     "EXEC sp_InsertAuditRequest " +
-                    "@meeting_date, @description, @preliminary_start_date, " +
-                    "@audit_firm, @audit_firm_person_name, @audit_department_id, " +
+                    "@meeting_date, @audit_name, @preliminary_start_date, " +
+                    "@audit_firm, @audit_manager, @audit_department_id, " +
                     "@info_request_date, @info_submit_date, @field_work_start_date, " +
                     "@field_work_end_date, @exit_meeting_date, @management_discussion_date, " +
-                    "@report_issued_date, @shared_to_board_date, @audit_committee_table_date",
+                    "@report_issued_date, @shared_to_board_date, @audit_committee_table_date, " +
+                    "@review_reference, @sector, @company_id, @management_response_received_date, " +
+                    "@draft_report_received_date, @draft_report_circulate_date",
 
                     new SqlParameter("@meeting_date", request.meeting_date),
-                    new SqlParameter("@description", request.description),
+                    new SqlParameter("@audit_name", request.audit_name),
                     new SqlParameter("@preliminary_start_date", (object?)request.preliminary_start_date ?? DBNull.Value),
                     new SqlParameter("@audit_firm", request.audit_firm),
-                    new SqlParameter("@audit_firm_person_name", request.audit_firm_person_name),
+                    new SqlParameter("@audit_manager", request.audit_manager),
                     new SqlParameter("@audit_department_id", request.audit_department_id),
                     new SqlParameter("@info_request_date", (object?)request.info_request_date ?? DBNull.Value),
                     new SqlParameter("@info_submit_date", (object?)request.info_submit_date ?? DBNull.Value),
@@ -47,7 +49,13 @@ namespace InternalAuditSystem.Controllers
                     new SqlParameter("@management_discussion_date", (object?)request.management_discussion_date ?? DBNull.Value),
                     new SqlParameter("@report_issued_date", (object?)request.report_issued_date ?? DBNull.Value),
                     new SqlParameter("@shared_to_board_date", (object?)request.shared_to_board_date ?? DBNull.Value),
-                    new SqlParameter("@audit_committee_table_date", (object?)request.audit_committee_table_date ?? DBNull.Value)
+                    new SqlParameter("@audit_committee_table_date", (object?)request.audit_committee_table_date ?? DBNull.Value),
+                    new SqlParameter("@review_reference", request.review_reference),
+                    new SqlParameter("@sector", request.sector),
+                    new SqlParameter("@company_id", request.company_id),
+                    new SqlParameter("@management_response_received_date", (object?)request.management_response_received_date ?? DBNull.Value),
+                    new SqlParameter("@draft_report_received_date", (object?)request.draft_report_received_date ?? DBNull.Value),
+                    new SqlParameter("@draft_report_circulate_date", (object?)request.draft_report_circulate_date ?? DBNull.Value)
                 );
 
                 return Ok(new { message = "Audit Request created successfully" });
@@ -98,10 +106,10 @@ namespace InternalAuditSystem.Controllers
                     @"EXEC sp_UpdateAuditRequest
         @request_id,
         @meeting_date,
-        @description,
+        @audit_name,
         @preliminary_start_date,
         @audit_firm,
-        @audit_firm_person_name,
+        @audit_manager,
         @audit_department_id,
         @info_request_date,
         @info_submit_date,
@@ -111,14 +119,20 @@ namespace InternalAuditSystem.Controllers
         @management_discussion_date,
         @report_issued_date,
         @shared_to_board_date,
-        @audit_committee_table_date",
+        @audit_committee_table_date,
+        @review_reference,
+        @sector,
+        @company_id,
+        @management_response_received_date,
+        @draft_report_received_date,
+        @draft_report_circulate_date",
 
                     new SqlParameter("@request_id", id),
                     new SqlParameter("@meeting_date", request.meeting_date),
-                    new SqlParameter("@description", request.description),
+                    new SqlParameter("@audit_name", request.audit_name),
                     new SqlParameter("@preliminary_start_date", (object?)request.preliminary_start_date ?? DBNull.Value),
                     new SqlParameter("@audit_firm", request.audit_firm),
-                    new SqlParameter("@audit_firm_person_name", request.audit_firm_person_name),
+                    new SqlParameter("@audit_manager", request.audit_manager),
                     new SqlParameter("@audit_department_id", request.audit_department_id),
                     new SqlParameter("@info_request_date", (object?)request.info_request_date ?? DBNull.Value),
                     new SqlParameter("@info_submit_date", (object?)request.info_submit_date ?? DBNull.Value),
@@ -128,7 +142,13 @@ namespace InternalAuditSystem.Controllers
                     new SqlParameter("@management_discussion_date", (object?)request.management_discussion_date ?? DBNull.Value),
                     new SqlParameter("@report_issued_date", (object?)request.report_issued_date ?? DBNull.Value),
                     new SqlParameter("@shared_to_board_date", (object?)request.shared_to_board_date ?? DBNull.Value),
-                    new SqlParameter("@audit_committee_table_date", (object?)request.audit_committee_table_date ?? DBNull.Value)
+                    new SqlParameter("@audit_committee_table_date", (object?)request.audit_committee_table_date ?? DBNull.Value),
+                    new SqlParameter("@review_reference", request.review_reference),
+                    new SqlParameter("@sector", request.sector),
+                    new SqlParameter("@company_id", request.company_id),
+                    new SqlParameter("@management_response_received_date", (object?)request.management_response_received_date ?? DBNull.Value),
+                    new SqlParameter("@draft_report_received_date", (object?)request.draft_report_received_date ?? DBNull.Value),
+                    new SqlParameter("@draft_report_circulate_date", (object?)request.draft_report_circulate_date ?? DBNull.Value)
                 );
 
                 return Ok(new { message = "Audit Request updated successfully" });
@@ -137,6 +157,29 @@ namespace InternalAuditSystem.Controllers
             {
                 _logger.LogError(ex, "Failed to update audit request");
                 return StatusCode(500, new { message = "Failed to update audit request." });
+            }
+        }
+
+        [HttpGet("{id}")]
+
+        public async Task<IActionResult> GetAuditRequestById(int id)
+        {
+            try
+            {
+                var auditRequest = await _context.AuditRequests
+                    .FirstOrDefaultAsync(x => x.request_id == id);
+
+                if (auditRequest == null)
+                {
+                    return NotFound(new { message = "Audit request not found" });
+                }
+                return Ok(auditRequest);
+            }
+            catch (Exception ex)
+
+            {
+                _logger.LogError(ex, "Failed to fetch audit request by id");
+                return StatusCode(500, new { message = "Failed to fetch audit request." });
             }
         }
     }

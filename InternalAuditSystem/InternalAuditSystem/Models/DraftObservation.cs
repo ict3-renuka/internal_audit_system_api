@@ -10,8 +10,6 @@ namespace InternalAuditSystem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int observation_id { get; set; }
 
-        public String review_reference { get; set; } = string.Empty;
-
         public string area { get; set; } = string.Empty;
 
         public string subject { get; set; } = string.Empty;
@@ -21,6 +19,8 @@ namespace InternalAuditSystem.Models
         public string risk_and_root_cause { get; set; } = string.Empty;
 
         public string recommendation { get; set; } = string.Empty;
+
+        public int audit_request_id { get; set; }
 
         public DateTime creation_date { get; set; }
     }

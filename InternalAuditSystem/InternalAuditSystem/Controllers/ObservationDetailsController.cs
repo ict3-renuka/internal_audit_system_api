@@ -39,7 +39,7 @@ namespace InternalAuditSystem.Controllers
                     "EXEC sp_InsertObservationDetails " +
                     "@observation_id, @department_id, @internal_department_id, " +
                     "@responsible_user, @management_response, @corrective_action_plan, " +
-                    "@action_time_line, @status, @remark, @remarked_date, @new_id OUTPUT",
+                    "@action_time_line, @status, @remark, @remarked_date, @amendment_management_response, @new_id OUTPUT",
                     new SqlParameter("@observation_id", request.observation_id),
                     new SqlParameter("@department_id", request.department_id),
                     new SqlParameter("@internal_department_id", request.internal_department_id),
@@ -50,6 +50,7 @@ namespace InternalAuditSystem.Controllers
                     new SqlParameter("@status", (object?)request.status ?? DBNull.Value),
                     new SqlParameter("@remark", (object?)request.remark ?? DBNull.Value),
                     new SqlParameter("@remarked_date", (object?)request.remarked_date ?? DBNull.Value),
+                    new SqlParameter("@amendment_management_response", (object?)request.amendment_management_response ?? DBNull.Value),
                     idParam
                 );
 
@@ -132,6 +133,7 @@ namespace InternalAuditSystem.Controllers
                 fields.TryGetValue("remark", out var remark);
                 fields.TryGetValue("remarked_date", out var rd);
                 fields.TryGetValue("is_active", out var isActive);
+                fields.TryGetValue("amendment_management_response", out var amr);
 
                 object isActiveValue = DBNull.Value;
 
@@ -148,7 +150,7 @@ namespace InternalAuditSystem.Controllers
                 await _context.Database.ExecuteSqlRawAsync(
                     "EXEC sp_UpdateObservationDetails " +
                     "@observation_details_id, @management_response, @corrective_action_plan, " +
-                    "@action_time_line, @status, @remark, @remarked_date, @is_active",
+                    "@action_time_line, @status, @remark, @remarked_date, @is_active, @amendment_management_response",
                     new SqlParameter("@observation_details_id", id),
                     new SqlParameter("@management_response", (object?)mgmtResponse?.ToString() ?? DBNull.Value),
                     new SqlParameter("@corrective_action_plan", (object?)cap?.ToString() ?? DBNull.Value),
@@ -156,8 +158,9 @@ namespace InternalAuditSystem.Controllers
                     new SqlParameter("@status", (object?)status?.ToString() ?? DBNull.Value),
                     new SqlParameter("@remark", (object?)remark?.ToString() ?? DBNull.Value),
                     new SqlParameter("@remarked_date", (object?)rd?.ToString() ?? DBNull.Value),
-                    new SqlParameter("@is_active", isActiveValue)
-                );
+                    new SqlParameter("@is_active", isActiveValue),
+                    new SqlParameter("@amendment_management_response", (object?)amr?.ToString() ?? DBNull.Value)
+                    );
 
                 return Ok(new { message = "Observation Details updated successfully" });
             }
@@ -195,8 +198,8 @@ namespace InternalAuditSystem.Controllers
                             orderby o.creation_date descending
                             select new CombinedObservation
                             {
+                                AuditRequestId = o.audit_request_id,
                                 ObservationId = o.observation_id,
-                                ReviewReference = o.review_reference,
                                 Area = o.area,
                                 Subject = o.subject,
                                 Details = o.details,
@@ -214,6 +217,7 @@ namespace InternalAuditSystem.Controllers
                                 Status = od != null ? od.status : null,
                                 Remark = od != null ? od.remark : null,
                                 RemarkedDate = od != null ? od.remarked_date : (DateTime?)null,
+                                AmendmentManagementResponse = od != null ? od.amendment_management_response : null,
                                 IsActive = od != null ? od.is_active : true,
                                 HasPdf = _context.ObservationAttachments
                                         .Any(a => a.observation_id == o.observation_id),
@@ -298,7 +302,6 @@ namespace InternalAuditSystem.Controllers
                                 ObservationId = o.observation_id,
                                 DepartmentId = d.department_id,
                                 InternalDepartmentId = id.internal_department_id,
-                                ReviewReference = o.review_reference,
                                 Area = o.area,
                                 Subject = o.subject,
                                 RiskAndRootCause = o.risk_and_root_cause,
@@ -309,6 +312,7 @@ namespace InternalAuditSystem.Controllers
                                 CorrectiveActionPlan = od.corrective_action_plan,
                                 Status = od.status,
                                 Remark = od.remark,
+                                AmendmentManagementResponse = od.amendment_management_response,
                                 ObservationCreationDate = o.creation_date
                             };
 

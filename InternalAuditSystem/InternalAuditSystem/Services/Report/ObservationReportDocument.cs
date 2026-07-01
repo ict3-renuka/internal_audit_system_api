@@ -40,7 +40,6 @@ namespace InternalAuditSystem.Services.Report
                 {
                     table.ColumnsDefinition(columns =>
                     {
-                        columns.RelativeColumn(1);  // Review Reference
                         columns.RelativeColumn(1);  // Area
                         columns.RelativeColumn(2);  // Subject
                         columns.RelativeColumn(3);  // Risk
@@ -51,12 +50,12 @@ namespace InternalAuditSystem.Services.Report
                         columns.RelativeColumn(3);  // Corrective Action Plan
                         columns.RelativeColumn(1);  // Status
                         columns.RelativeColumn(2);  // Remark
+                        columns.RelativeColumn(2);  // Amendment Management Response
                         columns.RelativeColumn(1);  // Date
                     });
 
                     table.Header(header =>
                     {
-                        header.Cell().Text("Review Ref.").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
                         header.Cell().Text("Area").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
                         header.Cell().Text("Subject").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
                         header.Cell().Text("Risk").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
@@ -67,12 +66,12 @@ namespace InternalAuditSystem.Services.Report
                         header.Cell().Text("Action Plan").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
                         header.Cell().Text("Status").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
                         header.Cell().Text("Remark").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
+                        header.Cell().Text("Amendment Mgmt Response").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
                         header.Cell().Text("Date").Bold().FontSize(11).FontColor(Colors.Blue.Darken2);
                     });
 
                     foreach (var item in _data)
                     {
-                        table.Cell().Padding(2).Text(item.ReviewReference ?? "-").FontSize(8);
                         table.Cell().Padding(2).Text(item.Area ?? "-").FontSize(8);
                         table.Cell().Padding(2).Text(item.Subject ?? "-").FontSize(8);
                         table.Cell().Padding(2).Text(item.RiskAndRootCause ?? "-").FontSize(8);
@@ -83,6 +82,7 @@ namespace InternalAuditSystem.Services.Report
                         table.Cell().Padding(2).Text(item.CorrectiveActionPlan ?? "-").FontSize(8);
                         table.Cell().Padding(2).Text(item.Status ?? "-").FontSize(8);
                         table.Cell().Padding(2).Text(item.Remark ?? "-").FontSize(8);
+                        table.Cell().Padding(2).Text(item.AmendmentManagementResponse ?? "-").FontSize(8);
                         table.Cell().Padding(2).Text(item.ObservationCreationDate.ToString("yyyy-MM-dd")).FontSize(8);
                     }
                 });

@@ -1,0 +1,4 @@
+ip=mail.renukagroup.com
+port=587
+username=ifsreportdist@renukafoods.com
+password=IFsR@#2024Z

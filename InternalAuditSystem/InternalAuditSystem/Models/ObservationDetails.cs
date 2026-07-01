@@ -35,5 +35,7 @@ namespace InternalAuditSystem.Models
         public DateTime last_modified_date { get; set; }
 
         public bool is_active { get; set; } = true;
+
+        public string? amendment_management_response { get; set; }
     }
 }
