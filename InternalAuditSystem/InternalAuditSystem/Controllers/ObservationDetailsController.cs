@@ -179,11 +179,11 @@ namespace InternalAuditSystem.Controllers
         {
             try
             {
-                var query = from o in _context.DraftObservations
+                        var query =
+                            from od in _context.ObservationDetails
 
-                            join od in _context.ObservationDetails
-                                on o.observation_id equals od.observation_id into details
-                            from od in details.DefaultIfEmpty()
+                            join o in _context.DraftObservations
+                                on od.observation_id equals o.observation_id
 
                             join d in _context.Departments
                                 on od.department_id equals d.department_id into depts
@@ -193,7 +193,7 @@ namespace InternalAuditSystem.Controllers
                                 on od.internal_department_id equals id.internal_department_id into intDepts
                             from id in intDepts.DefaultIfEmpty()
 
-                            where od == null || includeInactive || od.is_active
+                            where includeInactive || od.is_active
 
                             orderby o.creation_date descending
                             select new CombinedObservation
@@ -289,32 +289,38 @@ namespace InternalAuditSystem.Controllers
                 var query = from o in _context.DraftObservations
                             join od in _context.ObservationDetails
                                 on o.observation_id equals od.observation_id into odGroup
-                            from od in odGroup.DefaultIfEmpty()  
+                            from od in odGroup.DefaultIfEmpty()
+
+                            join ar in _context.AuditRequests
+                        on o.audit_request_id equals ar.request_id
+
                             join d in _context.Departments
-                                on od.department_id equals d.department_id into dGroup
-                            from d in dGroup.DefaultIfEmpty()
-                            join id in _context.InternalDepartments
-                                on od.internal_department_id equals id.internal_department_id into idGroup
-                            from id in idGroup.DefaultIfEmpty()
+                        on od.department_id equals d.department_id into dGroup
+                    from d in dGroup.DefaultIfEmpty()
+
+                    join id in _context.InternalDepartments
+                        on od.internal_department_id equals id.internal_department_id into idGroup
+                    from id in idGroup.DefaultIfEmpty()
                            // where od.is_active == true
-                            select new CombinedObservation
-                            {
+                    select new CombinedObservation
+                    {
                                 ObservationId = o.observation_id,
                                 DepartmentId = d.department_id,
                                 InternalDepartmentId = id.internal_department_id,
-                                Area = o.area,
-                                Subject = o.subject,
-                                RiskAndRootCause = o.risk_and_root_cause,
-                                Recommendation = o.recommendation,
-                                DepartmentName = d.department_name,
-                                InternalDepartmentName = id.internal_department_name,
-                                ManagementResponse = od.management_response,
-                                CorrectiveActionPlan = od.corrective_action_plan,
-                                Status = od.status,
-                                Remark = od.remark,
-                                AmendmentManagementResponse = od.amendment_management_response,
-                                ObservationCreationDate = o.creation_date
-                            };
+                        Area = o.area,
+                        Subject = o.subject,
+                        AuditName = ar.audit_name,
+                        RiskAndRootCause = o.risk_and_root_cause,
+                        Recommendation = o.recommendation,
+                        DepartmentName = d.department_name,
+                        InternalDepartmentName = id.internal_department_name,
+                        ManagementResponse = od.management_response,
+                        CorrectiveActionPlan = od.corrective_action_plan,
+                        Status = od.status,
+                        Remark = od.remark,
+                        AmendmentManagementResponse = od.amendment_management_response,
+                        ObservationCreationDate = o.creation_date
+                    };
 
                 if (departmentId.HasValue)
                     query = query.Where(x => x.DepartmentId == departmentId.Value);

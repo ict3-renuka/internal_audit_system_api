@@ -1,9 +1,12 @@
 ﻿using InternalAuditSystem.Data;
 using InternalAuditSystem.Models;
+using InternalAuditSystem.Models.DTO;
+using InternalAuditSystem.Services.Report;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using QuestPDF.Fluent;
 
 namespace InternalAuditSystem.Controllers
 {
@@ -180,6 +183,100 @@ namespace InternalAuditSystem.Controllers
             {
                 _logger.LogError(ex, "Failed to fetch audit request by id");
                 return StatusCode(500, new { message = "Failed to fetch audit request." });
+            }
+        }
+
+        [HttpGet("audit-request-report")]
+        public async Task<IActionResult> GetAuditRequestReport(
+            string? sector,
+            int? companyId,
+            int? departmentId,
+            string? status,
+            DateTime? fromDate,
+            DateTime? toDate)
+                {
+            try
+            {
+                var query =
+                    from ar in _context.AuditRequests
+
+                    join dofJoin in _context.DraftObservations
+                        on ar.request_id equals dofJoin.audit_request_id into dofGroup
+                    from dof in dofGroup.DefaultIfEmpty()
+
+                    join odJoin in _context.ObservationDetails
+                        on (dof != null ? (int?)dof.observation_id : null) equals odJoin.observation_id into odGroup
+                    from od in odGroup.DefaultIfEmpty()
+
+                    join d in _context.Departments
+                        on ar.audit_department_id equals d.department_id into deptGroup
+                    from d in deptGroup.DefaultIfEmpty()
+
+                    join c in _context.Companies
+                        on ar.company_id equals c.company_id into companyGroup
+                    from c in companyGroup.DefaultIfEmpty()
+
+                    select new AuditRequestReportDto
+                    {
+                        RequestId = ar.request_id,
+                        MeetingDate = ar.meeting_date,
+                        AuditName = ar.audit_name,
+                        PreliminaryStartDate = ar.preliminary_start_date,
+                        AuditFirm = ar.audit_firm,
+                        AuditManager = ar.audit_manager,
+
+                        DepartmentId = d != null ? (int?)d.department_id : null,
+                        DepartmentName = d != null ? d.department_name : null,
+
+                        InfoRequestDate = ar.info_request_date,
+                        InfoSubmitDate = ar.info_submit_date,
+                        FieldWorkStartDate = ar.field_work_start_date,
+                        FieldWorkEndDate = ar.field_work_end_date,
+                        ExitMeetingDate = ar.exit_meeting_date,
+                        ManagementDiscussionDate = ar.management_discussion_date,
+                        ReportIssuedDate = ar.report_issued_date,
+                        SharedToBoardDate = ar.shared_to_board_date,
+                        AuditCommitteeTableDate = ar.audit_committee_table_date,
+                        ReviewReference = ar.review_reference,
+                        Sector = ar.sector,
+
+                        CompanyId = c != null ? (int?)c.company_id : null,
+                        CompanyName = c != null ? c.company_name : null,
+
+                        DraftObservationId = dof != null ? (int?)dof.observation_id : null,
+                        ObservationDetailId = od != null ? (int?)od.observation_id : null,
+
+                        Status = od != null ? od.status : null
+                    };
+
+                if (!string.IsNullOrWhiteSpace(sector))
+                    query = query.Where(x => x.Sector == sector);
+                if (departmentId.HasValue)
+                    query = query.Where(x => x.DepartmentId == departmentId.Value);
+                if (companyId.HasValue)
+                    query = query.Where(x => x.CompanyId == companyId.Value);
+                if (fromDate.HasValue)
+                    query = query.Where(x => x.MeetingDate >= fromDate);
+                if (toDate.HasValue)
+                    query = query.Where(x => x.MeetingDate <= toDate);
+
+                if (!string.IsNullOrWhiteSpace(status))
+                    query = query.Where(x => x.Status == status);
+
+                var data = await query
+                    .OrderByDescending(x => x.MeetingDate)
+                    .ToListAsync();
+
+                var document = new AuditRequestReportDocument(data);
+                var pdf = document.GeneratePdf();
+
+                Response.Headers["Content-Disposition"] = "inline; filename=AuditRequestReport.pdf";
+                return File(pdf, "application/pdf");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to generate Audit Request report.");
+                return StatusCode(500, new { message = "Failed to generate report." });
             }
         }
     }
